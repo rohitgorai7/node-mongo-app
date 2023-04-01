@@ -8,11 +8,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
+  submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {
+    this.generateForm();
+  }
 
   ngOnInit(): void {
-    this.generateForm();
   }
 
   generateForm() {
