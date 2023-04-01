@@ -101,6 +101,5 @@
         }
       }
     }
-  },
-  "defaultProject": "node-mongo-app"
+  }
 }
