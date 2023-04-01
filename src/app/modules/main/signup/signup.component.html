@@ -1,4 +1,10 @@
 <p>signup works!</p>
 <form [formGroup]="signupForm" (ngSubmit)="submitted = true">
-    
+    name: <input type="text" required placeholder="name" formControlName="name" name="name" autocomplete="none"><br><br>
+    username: <input type="text" required placeholder="username" formControlName="username" name="username" autocomplete="none"><br><br>
+    email: <input type="email" required placeholder="email" formControlName="email" name="email" autocomplete="none"><br><br>
+    password: <input type="password" required placeholder="password" formControlName="password" name="password" autocomplete="none"><br><br>
+    <button type="submit" (click)="signup()">Signup</button><br><br>
+    <button type="button" (click)="navigate('login')">Login</button><br><br>
+    <button type="button" (click)="navigate('forgot-password')">Forgot Password</button>
 </form>

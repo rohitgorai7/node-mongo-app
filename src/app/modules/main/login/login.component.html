@@ -1,1 +1,19 @@
 <p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="submitted = true">
+    <input type="text" placeholder="username" formControlName="username" name="username" autocomplete="none">
+    <br>
+    <br>
+    <input type="text" placeholder="email" formControlName="email" name="email" autocomplete="none">
+    <br>
+    <br>
+    <input type="text" placeholder="password" required formControlName="password" name="password" autocomplete="none">
+    <br>
+    <br>
+    <button type="submit" (click)="login()">Login</button>
+    <br>
+    <br>
+    <button type="button" (click)="navigate('signup')">Signup</button>
+    <br>
+    <br>
+    <button type="button" (click)="navigate('forgot-password')">Forgot Password</button>
+</form>
