@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MainApiService } from '../services/main-api.service';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +12,7 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private mainApiService: MainApiService) {
     this.generateForm();
   }
 
@@ -26,10 +28,25 @@ export class SignupComponent implements OnInit {
     })
   }
 
-  signup() {
-    if(this.signupForm.status !== 'VALID') {
-
+  async signup() {
+    try {
+      console.log(this.signupForm.value);
+      if(this.signupForm.status !== 'VALID') {
+        return;
+      }      
+      const payload = {
+        ...this.signupForm.value
+      }
+      await this.mainApiService.signup(payload);
+      this.signupForm.reset();
+      this.navigate('login');
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  navigate(url: string) {
+    this.router.navigate([`${url}`]);
   }
 
 }

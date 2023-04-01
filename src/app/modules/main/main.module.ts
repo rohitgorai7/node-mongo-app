@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SignupComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UsersComponent
   ],
   imports: [
     CommonModule,
