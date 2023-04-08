@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: ''
+  apiUrl: "https://node-mongo-aw4y.onrender.com"
 };
 
 /*
