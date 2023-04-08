@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainApiService } from '../services/main-api.service';
+import { MainService } from '../services/main.service';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +10,7 @@ import { MainApiService } from '../services/main-api.service';
 export class UsersComponent implements OnInit {
   users: any = [];
 
-  constructor(private mainApiService: MainApiService) { }
+  constructor(private mainApiService: MainApiService, private mainService: MainService) { }
 
   ngOnInit(): void {
     this.getUsers();

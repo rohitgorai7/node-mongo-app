@@ -15,4 +15,8 @@ export class MainApiService {
   getUsers(params = {}) {
     return this.httpService.get('/get-users', params);
   }
+
+  login(payload = {}) {
+    return this.httpService.post('/login', payload);    
+  }
 }
