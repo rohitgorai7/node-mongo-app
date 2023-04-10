@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const user = this.mainService.getUserData();
     if(user.token) {
-      this.navigate('users');
+      this.navigate('management/users');
     }
   }
 
@@ -42,14 +42,14 @@ export class LoginComponent implements OnInit {
       }
       const response = await this.mainApiService.login(payload);
       this.mainService.setSessionStorage(response);
-      this.navigate('users');
+      this.navigate('management/users');
     } catch (error) {
       console.log(error);
     }
   }
 
   navigate(url: string) {
-    this.router.navigate([`${url}`]);
+    this.router.navigate([url]);
   }
 
 }
