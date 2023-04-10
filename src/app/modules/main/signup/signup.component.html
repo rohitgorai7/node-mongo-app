@@ -1,10 +1,27 @@
-<p>signup works!</p>
-<form [formGroup]="signupForm" (ngSubmit)="submitted = true">
-    name: <input type="text" required placeholder="name" formControlName="name" name="name" autocomplete="none"><br><br>
-    username: <input type="text" required placeholder="username" formControlName="username" name="username" autocomplete="none"><br><br>
-    email: <input type="email" required placeholder="email" formControlName="email" name="email" autocomplete="none"><br><br>
-    password: <input type="password" required placeholder="password" formControlName="password" name="password" autocomplete="none"><br><br>
-    <button type="submit" (click)="signup()">Signup</button><br><br>
-    <button type="button" (click)="navigate('login')">Login</button><br><br>
-    <button type="button" (click)="navigate('forgot-password')">Forgot Password</button>
-</form>
+<div class="container">
+    <div class="wrapper">
+        <div class="title"><span>Register</span></div>
+        <form autocomplete="off" [formGroup]="signupForm" (ngSubmit)="submitted = true">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" required placeholder="name" formControlName="name" name="name" autocomplete="new-password">
+                <label for="name">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" required placeholder="username" formControlName="username" name="username" autocomplete="new-password">
+                <label for="username">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" required placeholder="email" formControlName="email" name="email" autocomplete="new-password">
+                <label for="email">Email</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" required placeholder="password" formControlName="password" name="password" autocomplete="new-password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="pass">Already have an account? <a (click)="navigate('login')">Login</a></div>
+            <div class="row button">
+                <input type="submit" value="Signup" (click)="signup()">
+            </div>
+        </form>
+    </div>
+</div>
