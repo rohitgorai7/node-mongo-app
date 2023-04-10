@@ -28,11 +28,11 @@ export class HttpService {
   }
 
   getHeaders() {
-    const user: any = this.mainService.getUserData();
+    const user = this.mainService.getUserData();
     return {
       ...{
         headers: new HttpHeaders({
-          ...(user ? {"x-access-token": user.token} : {})
+          ...(user.token ? ({"x-access-token": user.token}) : {})
         })
       }
     }

@@ -18,11 +18,6 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    if(!this.mainService.getUserData()) {
-      this.mainService.clearSession();
-    } else {
-      this.navigate('users');
-    }
   }
 
   generateForm() {
@@ -37,8 +32,11 @@ export class LoginComponent implements OnInit {
       if(this.loginForm.status !=="VALID") {
         return;
       }
-      const response = await this.mainApiService.login(this.loginForm.value);
-      console.log(response);
+      const payload = {
+        username: this.loginForm.controls['username'].value,
+        password: this.loginForm.controls['password'].value
+      }
+      const response = await this.mainApiService.login(payload);
       this.mainService.setSessionStorage(response);
       this.navigate('users');
     } catch (error) {
