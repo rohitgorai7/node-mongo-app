@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { MainApiService } from '../services/main-api.service';
 
@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService) {
+  constructor(private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute) {
     this.generateForm();
    }
 
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   generateForm() {
     this.loginForm = this.fb.group({
-      username:[ null, Validators.required],
+      username: [this.activatedRoute.snapshot.paramMap.get('username') || null, Validators.required],
       password: [null, Validators.required]
     });
   }
@@ -43,13 +43,14 @@ export class LoginComponent implements OnInit {
       const response = await this.mainApiService.login(payload);
       this.mainService.setSessionStorage(response);
       this.navigate('management/users');
+      this.loginForm.reset();
     } catch (error) {
       console.log(error);
     }
   }
 
-  navigate(url: string) {
-    this.router.navigate([url]);
+  navigate(path: string) {
+    this.router.navigate([path]);
   }
 
 }

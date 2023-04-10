@@ -6,7 +6,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { error } from 'console';
 import { MainService } from 'src/app/modules/main/services/main.service';
 import { Router } from '@angular/router';
 

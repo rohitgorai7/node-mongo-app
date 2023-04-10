@@ -16,8 +16,7 @@ export class SignupComponent implements OnInit {
     this.generateForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   generateForm() {
     this.signupForm = this.formBuilder.group({
@@ -30,7 +29,6 @@ export class SignupComponent implements OnInit {
 
   async signup() {
     try {
-      console.log(this.signupForm.value);
       if(this.signupForm.status !== 'VALID') {
         return;
       }      
@@ -38,15 +36,18 @@ export class SignupComponent implements OnInit {
         ...this.signupForm.value
       }
       await this.mainApiService.signup(payload);
+      const params = {
+        username: this.signupForm.controls['username'].value
+      }
       this.signupForm.reset();
-      this.navigate('login');
+      this.navigate('login', params);
     } catch (error) {
       console.log(error);
     }
   }
 
-  navigate(url: string) {
-    this.router.navigate([`${url}`]);
+  navigate(path: string, params: any = {}) {
+    this.router.navigate([path, params]);
   }
 
 }
