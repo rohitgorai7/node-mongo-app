@@ -18,6 +18,10 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    const user = this.mainService.getUserData();
+    if(user.token) {
+      this.navigate('users');
+    }
   }
 
   generateForm() {
