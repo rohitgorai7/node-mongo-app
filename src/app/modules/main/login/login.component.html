@@ -4,11 +4,11 @@
         <form [formGroup]="loginForm" (ngSubmit)="submitted = true">
             <div class="row">
                 <i class="bi bi-person"></i>
-                <input type="text" placeholder="username" formControlName="username" name="username" autocomplete="none">
+                <input type="text" placeholder="Username" formControlName="username" name="username" autocomplete="none">
             </div>
             <div class="row">
                 <i class="bi bi-key"></i>
-                <input type="text" placeholder="password" required formControlName="password" name="password" autocomplete="none">
+                <input type="text" placeholder="Password" required formControlName="password" name="password" autocomplete="none">
             </div>
             <div class="pass"><a class="cursor-pointer" (click)="navigate('forgot-password')">Forgot password?</a></div>
             <div class="row button">

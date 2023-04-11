@@ -6,7 +6,9 @@ import { HttpService } from './http.service';
 })
 export class WebApiService {
 
-  constructor(private h: HttpService) { }
+  constructor(private httpService: HttpService) { }
 
-  
+  logout(payload = {}) {
+    return this.httpService.post('/logout', payload);
+  }
 }
