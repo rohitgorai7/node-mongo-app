@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top px-3" style="background-color: #5D3891;">
-    <a class="navbar-brand border rounded px-2" style="color: #5D3891; background-color: #fff; font-weight: 700;"><i class="bi bi-chat-heart"></i>
+    <a class="navbar-brand border rounded px-2 cursor-pointer" style="color: #5D3891; background-color: #fff; font-weight: 700;" (click)="navigateTo('/')"><i class="bi bi-chat-heart"></i>
         Homer</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -21,6 +21,7 @@
                 <a class="nav-link dropdown-toggle" style="font-weight: 500; color: #fff;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{(mainService.getUserData().name || '-') | titlecase}} </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">Manage Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
                 </ul>
             </li>

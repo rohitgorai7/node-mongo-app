@@ -3,7 +3,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MainApiService } from 'src/app/modules/main/services/main-api.service';
 import { MainService } from 'src/app/modules/main/services/main.service';
 import { NotificationService } from 'src/app/notification.service';
-import { MESSAGES } from 'src/app/shared/constants/constants';
+import { MESSAGES, USER_STATUS } from 'src/app/shared/constants/constants';
+import { ManagementApiService } from '../../services/management-api.service';
 
 @Component({
   selector: 'app-users',
@@ -13,10 +14,28 @@ import { MESSAGES } from 'src/app/shared/constants/constants';
 export class UsersComponent implements OnInit {
   users: any = [];
 
-  constructor(private mainApiService: MainApiService, private mainService: MainService, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) { }
+  constructor(private mainApiService: MainApiService,public mainService: MainService, private managementApiService: ManagementApiService, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.getUsers();
+  }
+
+  async updateUser(user: any) {
+    try {
+      this.ngxSpinnerService.show();
+      const payload = {
+        _id: user._id,
+        action: 'status',
+        status: user.status === USER_STATUS.ACTIVE ? USER_STATUS.INACTIVE : USER_STATUS.ACTIVE
+      }
+      const response: any = await this.managementApiService.updateUser(payload);
+      this.notificationService.success(response["message"]);
+      this.getUsers();
+    } catch (error) {
+      this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
+    } finally {
+      this.ngxSpinnerService.hide();
+    }
   }
 
   async getUsers() {
