@@ -13,7 +13,7 @@ import { WebApiService } from 'src/app/shared/services/web-api.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private webApiService: WebApiService, private ngxSpinnerService: NgxSpinnerService,private router: Router, private mainService: MainService, private notificationService: NotificationService) { }
+  constructor(private webApiService: WebApiService, private ngxSpinnerService: NgxSpinnerService,private router: Router, public mainService: MainService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
@@ -24,12 +24,21 @@ export class HeaderComponent implements OnInit {
       const response: any = await this.webApiService.logout();
       this.mainService.clearSession();
       this.notificationService.success(response.message);
-      this.router.navigate(['/']);
+      this.navigateTo('/');
     } catch (error) {
       this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
       this.ngxSpinnerService.hide();
     }
+  }
+
+  navigateTo(path = '') {
+    this.router.navigate([path]);
+  }
+
+  activeIf(path= '') {
+    console.log(this.router.url === path)
+    return this.router.url === path || this.router.url.includes(path);
   }
 
 }
