@@ -5,6 +5,7 @@ import { MainService } from '../services/main.service';
 import { MainApiService } from '../services/main-api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/notification.service';
+import { MESSAGES } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-login',
@@ -49,8 +50,8 @@ export class LoginComponent implements OnInit {
       this.notificationService.success(response['message']);
       this.navigate('management/users');
       this.loginForm.reset();
-    } catch (err) {
-      this.notificationService.error(err["message"]);
+    } catch (error) {
+      this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
       this.ngxSpinnerService.hide();
     }
