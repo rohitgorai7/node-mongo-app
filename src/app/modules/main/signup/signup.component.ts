@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MainApiService } from '../services/main-api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from 'src/app/notification.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +14,7 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private mainApiService: MainApiService, private ngxSpinnerService: NgxSpinnerService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private mainApiService: MainApiService, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) {
     this.generateForm();
   }
 
@@ -40,15 +41,16 @@ export class SignupComponent implements OnInit {
         "email": this.signupForm.controls["email"].value,
         "password": btoa(this.signupForm.controls["password"].value)
       }
-      await this.mainApiService.signup(payload);
+      const response: any = await this.mainApiService.signup(payload);
       const params = {
         username: this.signupForm.controls['username'].value
       }
       this.signupForm.reset();
+      this.notificationService.success(response['message']);
       this.navigate('login', params);
     } catch (error) {
-      console.log(error);
-    } finally {      
+      this.notificationService.error(error['message']);
+    } finally {
       this.ngxSpinnerService.show();
     }
   }
