@@ -1,3 +1,16 @@
 .color {
     color: #24b94e;
 }
+
+.nav-link {
+    cursor: pointer;
+}
+
+.active {
+    color: #fff !important;
+    font-weight: 500;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
