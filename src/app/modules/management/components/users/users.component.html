@@ -18,8 +18,12 @@
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.createdAt | date: 'mediumDate'}}</td>
-                <td>{{user.active}}</td>
-                <td>{{user.loggedIn}}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="userStatus" (click)="updateUser(user)" [disabled]="user._id === mainService.getUserData().userId" [checked]="user.status ==='active' ? true : false">
+                    </div>
+                </td>
+                <td>{{user.isLoggedIn}}</td>
             </tr>
         </ng-container>
     </tbody>

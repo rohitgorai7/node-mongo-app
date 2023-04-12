@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit {
   }
 
   activeIf(path= '') {
-    console.log(this.router.url === path)
     return this.router.url === path || this.router.url.includes(path);
   }
 

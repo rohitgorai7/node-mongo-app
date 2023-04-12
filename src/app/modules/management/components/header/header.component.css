@@ -14,3 +14,8 @@
 .dropdown-item {
     cursor: pointer;
 }
+
+.dropdown-item:hover {
+    background-color: #5D3891;
+    color: #fff;
+}
