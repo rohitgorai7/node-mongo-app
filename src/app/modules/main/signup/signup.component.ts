@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MainApiService } from '../services/main-api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/notification.service';
+import { MESSAGES } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-signup',
@@ -49,9 +50,9 @@ export class SignupComponent implements OnInit {
       this.notificationService.success(response['message']);
       this.navigate('login', params);
     } catch (error) {
-      this.notificationService.error(error['message']);
+      this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
-      this.ngxSpinnerService.show();
+      this.ngxSpinnerService.hide();
     }
   }
 

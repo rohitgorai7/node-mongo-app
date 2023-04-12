@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MainService } from 'src/app/modules/main/services/main.service';
 import { NotificationService } from 'src/app/notification.service';
+import { MESSAGES } from 'src/app/shared/constants/constants';
 import { WebApiService } from 'src/app/shared/services/web-api.service';
 
 @Component({
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
       this.notificationService.success(response.message);
       this.router.navigate(['/']);
     } catch (error) {
-      this.notificationService.error(error['message']);
+      this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
       this.ngxSpinnerService.hide();
     }
