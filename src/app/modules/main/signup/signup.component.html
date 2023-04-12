@@ -1,7 +1,7 @@
 <div class="container">
     <div class="wrapper">
         <div class="title"><span>Register</span></div>
-        <form autocomplete="off" [formGroup]="signupForm" (ngSubmit)="submitted = true">
+        <form autocomplete="off" [formGroup]="signupForm" (ngSubmit)="submitted = true" netlify>
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" required placeholder="name" formControlName="name" name="name" autocomplete="new-password">
                 <label for="name">Name</label>
