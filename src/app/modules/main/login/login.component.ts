@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MainService } from '../services/main.service';
 import { MainApiService } from '../services/main-api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from 'src/app/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   showSpinner: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService) {
+  constructor(private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) {
     this.generateForm();
    }
 
@@ -43,12 +44,13 @@ export class LoginComponent implements OnInit {
         username: this.loginForm.controls['username'].value,
         password: btoa(this.loginForm.controls['password'].value)
       }
-      const response = await this.mainApiService.login(payload);
+      const response: any = await this.mainApiService.login(payload);
       this.mainService.setSessionStorage(response);
+      this.notificationService.success(response['message']);
       this.navigate('management/users');
       this.loginForm.reset();
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.notificationService.error(err["message"]);
     } finally {
       this.ngxSpinnerService.hide();
     }
