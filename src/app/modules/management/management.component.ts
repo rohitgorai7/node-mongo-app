@@ -15,18 +15,16 @@ export class ManagementComponent implements OnInit {
   constructor(private webApiService: WebApiService, private notificationService: NotificationService, private mainService: MainService) { }
 
   ngOnInit(): void {
-    // if(this.mainService.user) {
-    //   this.timerSubscription = timer(0, 10000).pipe(
-    //     map(() => {
-    //       console.log(this.mainService.user.isLoggedIn);
-    //       if(this.mainService.user.isLoggedIn) {
-    //         this.getUserData();
-    //       }
-    //     })
-    //   ).subscribe();
-    // }
+    if(this.mainService.user) {
+      this.timerSubscription = timer(0, 10000).pipe(
+        map(() => {
+          if(this.mainService.user.isLoggedIn) {
+            this.getUserData();
+          }
+        })
+      ).subscribe();
+    }
   }
-  
 
   async getUserData() {
     try {

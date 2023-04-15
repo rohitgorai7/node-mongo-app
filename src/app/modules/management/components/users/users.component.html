@@ -10,23 +10,21 @@
             <th scope="col">Email</th>
             <th scope="col">Created At</th>
             <th scope="col">Status</th>
-            <th scope="col">Logged In</th>
         </tr>
     </thead>
     <tbody>
         <ng-container  *ngFor="let user of users; let i=index">
-            <tr>
-                <th scope="row">{{i+1}}</th>
-                <td>{{user.name}}</td>
-                <td>{{user.username}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.createdAt | date: 'mediumDate'}}</td>
-                <td>
+            <tr [ngClass]="user.isLoggedIn ? 'table-success' : 'table-danger'">
+                <td scope="row">{{i+1}}</td>
+                <td scope="row">{{user.name}}  <i class="bi bi-chat cursor-pointer"></i></td>
+                <td scope="row">{{user.username}}</td>
+                <td scope="row">{{user.email}}</td>
+                <td scope="row">{{user.createdAt | date: 'mediumDate'}}</td>
+                <td scope="row">
                     <div class="form-check form-switch">
                         <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="userStatus" (click)="updateUser(user)" [disabled]="user._id === mainService.user.userId || mainService.user.userType !== 'management'" [checked]="user.status ==='active' ? true : false">
                     </div>
                 </td>
-                <td>{{user.isLoggedIn}}</td>
             </tr>
         </ng-container>
     </tbody>
