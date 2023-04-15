@@ -7,8 +7,8 @@
                 <input type="text" placeholder="Username" formControlName="username" name="username" autocomplete="none">
             </div>
             <div class="row">
-                <i class="bi bi-key"></i>
-                <input type="text" placeholder="Password" required formControlName="password" name="password" autocomplete="none">
+                <i class="bi cursor-pointer" (click)="commonService.showPassword(password)" [ngClass]="password.type === 'password' ? 'bi-eye' : 'bi-eye-slash'" id="togglePassword"></i>
+                <input #password type="password" placeholder="Password" required formControlName="password" name="password" autocomplete="none">
             </div>
             <div class="pass"><a class="cursor-pointer" (click)="navigate('forgot-password')">Forgot password?</a></div>
             <div class="row button">

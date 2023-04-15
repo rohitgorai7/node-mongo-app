@@ -18,7 +18,7 @@
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item dropdown border rounded px-2">
-                <a class="nav-link dropdown-toggle" style="font-weight: 500; color: #fff;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{(mainService.getUserData().name || '-') | titlecase}} </a>
+                <a class="nav-link dropdown-toggle" style="font-weight: 500; color: #fff;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> {{(mainService.user.name || '-') | titlecase}} </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">Manage Profile</a></li>
                     <li><hr class="dropdown-divider"></li>

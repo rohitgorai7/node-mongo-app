@@ -11,4 +11,8 @@ export class WebApiService {
   logout(payload = {}) {
     return this.httpService.post('/logout', payload);
   }
+
+  getLoggedInData(params = {}) {
+    return this.httpService.get('/get-user-data', params);
+  }
 }

@@ -6,6 +6,10 @@ import { ManagementComponent } from './management.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'users'
+  },
+  {
+    path: '',
     component: ManagementComponent,
     children: [
       {
