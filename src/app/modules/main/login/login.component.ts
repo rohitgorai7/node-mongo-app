@@ -6,6 +6,7 @@ import { MainApiService } from '../services/main-api.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NotificationService } from 'src/app/notification.service';
 import { MESSAGES } from 'src/app/shared/constants/constants';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -17,16 +18,11 @@ export class LoginComponent implements OnInit {
   submitted: boolean = false;
   showSpinner: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) {
+  constructor(public commonService: CommonService, private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) {
     this.generateForm();
    }
 
-  ngOnInit(): void {
-    const user = this.mainService.getUserData();
-    if(user.token) {
-      this.navigate('management/users');
-    }
-  }
+  ngOnInit(): void {}
 
   generateForm() {
     this.loginForm = this.fb.group({
@@ -46,10 +42,10 @@ export class LoginComponent implements OnInit {
         password: btoa(this.loginForm.controls['password'].value)
       }
       const response: any = await this.mainApiService.login(payload);
-      this.mainService.setSessionStorage(response);
+      this.loginForm.reset();
+      this.mainService.setUser(response['user']);
       this.notificationService.success(response['message']);
       this.navigate('management/users');
-      this.loginForm.reset();
     } catch (error) {
       this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {

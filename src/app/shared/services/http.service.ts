@@ -28,7 +28,7 @@ export class HttpService {
   }
 
   getHeaders() {
-    const user = this.mainService.getUserData();
+    const user = this.mainService.user;
     return {
       ...{
         headers: new HttpHeaders({
