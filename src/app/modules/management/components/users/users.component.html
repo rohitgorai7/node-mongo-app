@@ -14,9 +14,9 @@
     </thead>
     <tbody>
         <ng-container  *ngFor="let user of users; let i=index">
-            <tr [ngClass]="user.isLoggedIn ? 'table-success' : 'table-danger'">
+            <tr>
                 <td scope="row">{{i+1}}</td>
-                <td scope="row">{{user.name}}  <i class="bi bi-chat cursor-pointer"></i></td>
+                <td scope="row" [ngClass]="user.isLoggedIn ? 'table-success' : 'table-danger'">{{user.name}}  <i class="bi bi-chat cursor-pointer"></i></td>
                 <td scope="row">{{user.username}}</td>
                 <td scope="row">{{user.email}}</td>
                 <td scope="row">{{user.createdAt | date: 'mediumDate'}}</td>

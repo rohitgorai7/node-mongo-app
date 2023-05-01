@@ -1,28 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/notification.service';
 import { WebApiService } from 'src/app/shared/services/web-api.service';
 import { MainService } from '../main/services/main.service';
-import { Subscription, map, timer } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-management',
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.css']
 })
-export class ManagementComponent implements OnInit {
-  timerSubscription: Subscription;
+export class ManagementComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
 
   constructor(private webApiService: WebApiService, private notificationService: NotificationService, private mainService: MainService) { }
 
   ngOnInit(): void {
-    if(this.mainService.user) {
-      this.timerSubscription = timer(0, 10000).pipe(
-        map(() => {
-          if(this.mainService.user.isLoggedIn) {
-            this.getUserData();
-          }
-        })
-      ).subscribe();
+    this.continuousApis();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  continuousApis() {
+    if(this.mainService.user && this.mainService.user.isLoggedIn) {
+      this.subscription = interval(5000).subscribe(() => {
+        if(this.mainService.user && this.mainService.user.isLoggedIn) {
+          this.getUserData();
+        }
+      });
     }
   }
 
