@@ -19,6 +19,9 @@ export class LoginComponent implements OnInit {
   showSpinner: boolean = false;
 
   constructor(public commonService: CommonService, private fb: FormBuilder, private router: Router, private mainService: MainService, private mainApiService: MainApiService, private activatedRoute: ActivatedRoute, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) {
+    if(this.mainService.user && mainService.user.token) {
+      this.navigate('/management/users');
+    }
     this.generateForm();
    }
 
