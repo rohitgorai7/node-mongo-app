@@ -5,9 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { UsersComponent } from './components/users/users.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ManagementComponent } from './management.component';
+import { ChatBoxComponent } from './dialogs/chat-box/chat-box.component';
 
 @NgModule({
-  declarations: [ManagementComponent, UsersComponent, HeaderComponent],
+  declarations: [ManagementComponent, UsersComponent, HeaderComponent, ChatBoxComponent],
   imports: [
     CommonModule,
     ManagementRoutingModule,

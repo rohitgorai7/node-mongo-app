@@ -28,6 +28,7 @@ export class MainService {
   clearSession() {
     localStorage.clear();
     sessionStorage.clear();
+    this.user$.next({});
   }
 
   setUser(userData: any = {}) {

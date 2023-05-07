@@ -24,7 +24,7 @@ export class ManagementComponent implements OnInit, OnDestroy {
 
   continuousApis() {
     if(this.mainService.user && this.mainService.user.isLoggedIn) {
-      this.subscription = interval(5000).subscribe(() => {
+      this.subscription = interval(30000).subscribe(() => {
         if(this.mainService.user && this.mainService.user.isLoggedIn) {
           this.getUserData();
         }

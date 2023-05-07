@@ -11,4 +11,16 @@ export class ManagementApiService {
   updateUser(payload = {}) {
     return this.http.post('/update-user', payload);
   }
+
+  getMessages(params = {}) {
+    return this.http.get('/get-messages', params);
+  }
+
+  sendChat(payload = {}) {
+    return this.http.post('/send-chat', payload);
+  }
+
+  // updateUser(payload = {}) {
+  //   return this.http.post('/update-user', payload);
+  // }
 }

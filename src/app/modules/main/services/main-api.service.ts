@@ -16,6 +16,10 @@ export class MainApiService {
     return this.httpService.get('/get-users', params);
   }
 
+  getChatUsers(params = {}) {
+    return this.httpService.get('/get-chat-users', params);
+  }
+
   login(payload = {}) {
     return this.httpService.post('/login', payload);    
   }
