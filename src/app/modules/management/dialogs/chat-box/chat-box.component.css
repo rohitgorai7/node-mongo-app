@@ -7,13 +7,32 @@ html {
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 }
 
+@media only screen and (max-width: 600px) {
+    body {
+        margin: 0px;
+        background: lightblue !important;
+    }
+
+    .contacts_card {
+        margin-left: 0px;
+        width: 40%;
+    }
+
+    .img {
+        width: 40%;
+        height: 40%;
+    }
+}
+
 .chat {
     margin-top: auto;
     margin-bottom: auto;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 .card {
-    height: 500px;
+    height: 647px;
     border-radius: 15px !important;
     background-color: rgba(0, 0, 0, 0.4) !important;
 }
@@ -55,11 +74,14 @@ html {
 }
 
 .type_msg {
+    padding-top: 15px;
+    padding-left: 15px;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: 0 !important;
     color: white !important;
     height: 60px !important;
     overflow-y: auto;
+    resize: none;
 }
 
 .type_msg:focus {
@@ -81,6 +103,11 @@ html {
     border: 0 !important;
     color: white !important;
     cursor: pointer;
+}
+
+.send_btn:hover {
+    background-color: white !important;
+    color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .search_btn {
@@ -107,20 +134,43 @@ html {
 }
 
 .user_img {
-    height: 70px;
-    width: 70px;
-    border: 1.5px solid #f5f6fa;
+    height: 55px;
+    width: 55px;
+    border: 3.5px solid #f5f6fa;
+}
 
+.b-green {
+    background-color: #55cf42ab !important;
+    border-color: #2ed215ab !important;
+}
+
+.b-red {
+    background-color: rgba(231, 81, 81, 0.568);
+    border-color: rgba(235, 5, 5, 0.711);
+}
+
+.t-green {
+    color: #2ed215ab !important;
+    font-weight: 800;
+    font-size: small;
+    letter-spacing: 25%;
+}
+
+.t-red {
+    color: rgba(235, 5, 5, 0.711);
+    font-weight: 800;
+    font-size: small;
+    letter-spacing: 25%;
 }
 
 .user_img_msg {
     height: 40px;
     width: 40px;
     border: 1.5px solid #f5f6fa;
-
 }
 
 .img_cont {
+    padding-top: 8px;
     position: relative;
     height: 70px;
     width: 70px;
@@ -137,8 +187,8 @@ html {
     width: 15px;
     background-color: #4cd137;
     border-radius: 50%;
-    bottom: 0.2em;
-    right: 0.4em;
+    bottom: 0.1em;
+    right: 0.1em;
     border: 1.5px solid white;
 }
 

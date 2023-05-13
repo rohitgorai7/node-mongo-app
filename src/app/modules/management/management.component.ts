@@ -11,6 +11,7 @@ import { Subscription, interval } from 'rxjs';
 })
 export class ManagementComponent implements OnInit, OnDestroy {
   subscription: Subscription;
+  runContinuous: boolean = true;
 
   constructor(private webApiService: WebApiService, private notificationService: NotificationService, private mainService: MainService) { }
 
@@ -19,13 +20,14 @@ export class ManagementComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.runContinuous = false;
     this.subscription.unsubscribe();
   }
 
   continuousApis() {
-    if(this.mainService.user && this.mainService.user.isLoggedIn) {
+    if (this.mainService.user && this.mainService.user.isLoggedIn) {
       this.subscription = interval(30000).subscribe(() => {
-        if(this.mainService.user && this.mainService.user.isLoggedIn) {
+        if (this.mainService.user && this.mainService.user.isLoggedIn && this.runContinuous) {
           this.getUserData();
         }
       });

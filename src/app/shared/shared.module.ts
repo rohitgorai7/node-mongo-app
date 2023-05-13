@@ -5,6 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpServiceInterceptor } from './services/http-service.interceptor';
 import { LogoutComponent } from './components/logout/logout.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -14,13 +15,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgbModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpServiceInterceptor, multi: true}]
 })

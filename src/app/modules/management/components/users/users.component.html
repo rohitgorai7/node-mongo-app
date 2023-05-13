@@ -13,16 +13,23 @@
         </tr>
     </thead>
     <tbody>
-        <ng-container  *ngFor="let user of users; let i=index">
+        <ng-container *ngFor="let user of users; let i=index">
             <tr>
                 <td scope="row">{{i+1}}</td>
-                <td scope="row" [ngClass]="user.isLoggedIn ? 'table-success' : 'table-danger'">{{user.name}}  <i class="bi bi-chat cursor-pointer"></i></td>
+                <td scope="row" [ngClass]="user.isLoggedIn ? 'table-success' : 'table-danger'">{{user.name}} <i
+                        *ngIf="user._id !== mainService.user.userId" class="bi bi-chat cursor-pointer" placement="right"
+                        ngbTooltip="Open Chat" (click)="navigateToChat(user)"></i></td>
                 <td scope="row">{{user.username}}</td>
                 <td scope="row">{{user.email}}</td>
                 <td scope="row">{{user.createdAt | date: 'mediumDate'}}</td>
                 <td scope="row">
-                    <div class="form-check form-switch">
-                        <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="userStatus" (click)="updateUser(user)" [disabled]="user._id === mainService.user.userId || mainService.user.userType !== 'management'" [checked]="user.status ==='active' ? true : false">
+                    <div class="form-check form-switch" placement="left"
+                        [ngbTooltip]="mainService.user.userType !== 'management' ? 'No Permissions' : user._id === mainService.user.userId ? '' : ''">
+                        <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="userStatus"
+                            (click)="updateUser(user)"
+                            [disabled]="user._id === mainService.user.userId || mainService.user.userType !== 'management'"
+                            placement="left" [ngbTooltip]="(user.status ==='active' ? 'Disable' : 'Enable') + ' User'"
+                            [checked]="user.status ==='active' ? true : false">
                     </div>
                 </td>
             </tr>

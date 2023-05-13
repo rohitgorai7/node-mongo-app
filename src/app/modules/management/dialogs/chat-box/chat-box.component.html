@@ -21,7 +21,7 @@
 <!--Coded With Love By Mutiullah Samim-->
 
 <body>
-    <div class="container-fluid h-100">
+    <div class="container-fluid h-100 full-chat">
         <div class="row justify-content-center h-100">
             <div class="col-md-4 col-xl-3 chat">
                 <div class="card mb-sm-3 mb-md-0 contacts_card">
@@ -35,16 +35,19 @@
                     </div>
                     <div class="card-body contacts_body">
                         <ul class="contacts" *ngFor="let user of chatUsers">
-                            <li class="active">
+                            <li [ngClass]="user._id === currentChat.userId ? 'active': ''">
                                 <div class="d-flex bd-highlight cursor-pointer" (click)="getMessages(user)">
                                     <div class="img_cont">
                                         <img src="http://simpleicon.com/wp-content/uploads/user1.png"
-                                            class="rounded-circle user_img">
-                                        <span class="online_icon" [ngClass]="user.isLoggedIn ? '' : 'offline'"></span>
+                                            class="rounded-circle user_img"
+                                            [ngClass]="user.isLoggedIn ? 'b-green' : 'b-red'">
+                                        <!-- <span class="online_icon" [ngClass]="user.isLoggedIn ? '' : 'offline'"></span> -->
                                     </div>
                                     <div class="user_info">
                                         <span>{{(user.name | titlecase) || '-'}}</span>
-                                        <p>{{user.lastMessage?.message || ''}}</p>
+                                        <p *ngIf="user.lastMessage?.message">{{user.lastMessage?.message?.slice(0,15) +
+                                            (user.lastMessage?.message?.length > 15 ? '...' : '') || ''}}<i>&nbsp; -
+                                                &nbsp;{{ user.lastMessage?.createdAt | date: 'medium'}}</i></p>
                                     </div>
                                 </div>
                             </li>
@@ -111,12 +114,16 @@
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
                                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
-                                    class="rounded-circle user_img">
-                                <span class="online_icon" [ngClass]="currentChat.isLoggedIn ? '' : 'offline'"></span>
+                                    class="rounded-circle user_img"
+                                    [ngClass]="currentChat.isLoggedIn ? 'b-green' : 'b-red'">
+                                <!-- <span class="online_icon" [ngClass]="currentChat.isLoggedIn ? '' : 'offline'"></span> -->
                             </div>
                             <div class="user_info">
                                 <span>{{currentChat.name | titlecase}}</span>
-                                <p >{{currentChat.messages?.length || 0}} Message(s)</p>
+                                <p *ngIf="currentChat.messages?.length">{{currentChat.messages?.length || 0}} Message(s)
+                                    &nbsp; &nbsp; <b
+                                        [ngClass]="currentChat.isLoggedIn ? 't-green' : 't-red'">{{!currentChat.isLoggedIn
+                                        ? 'Offline' : 'Online'}}</b></p>
                             </div>
                             <!-- <div class="video_cam">
                                 <span><i class="fas fa-video"></i></span>
@@ -133,9 +140,10 @@
                             </ul>
                         </div> -->
                     </div>
-                    <div class="card-body msg_card_body">
-                        <ng-container *ngFor="let chat of currentChat.messages">
-                            <div class="d-flex justify-content-end mb-4" *ngIf="chat.sender === mainService.user.userId">
+                    <div class="card-body msg_card_body" #content>
+                        <ng-container #messages *ngFor="let chat of currentChat.messages">
+                            <div class="d-flex justify-content-end mb-4"
+                                *ngIf="chat.sender === mainService.user.userId">
                                 <div class="msg_cotainer_send">
                                     {{chat.message}}
                                     <!-- <span class="msg_time_send">{{chat.createdAt}}</span> -->
@@ -145,7 +153,8 @@
                                         class="rounded-circle user_img_msg">
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-start mb-4" *ngIf="chat.receiver === mainService.user.userId">
+                            <div class="d-flex justify-content-start mb-4"
+                                *ngIf="chat.receiver === mainService.user.userId">
                                 <div class="img_cont_msg">
                                     <img src="http://simpleicon.com/wp-content/uploads/user1.png"
                                         class="rounded-circle user_img_msg">
@@ -158,15 +167,17 @@
                         </ng-container>
                     </div>
                     <div class="card-footer">
-                        <form [formGroup]="chatForm" >
+                        <form [formGroup]="chatForm">
                             <div class="input-group">
                                 <!-- <div class="input-group-append">
                                     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                                 </div> -->
-                                <input name="message" type="text" class="form-control type_msg"
-                                    placeholder="Type your message..." formControlName="message"/>
+                                <textarea name="message" type="text" class="form-control type_msg"
+                                    placeholder="Type your message..." formControlName="message"
+                                    (keydown)="handleSendMessage($event)" #sendMsg></textarea>
                                 <div class="input-group-append">
-                                    <span class="input-group-text send_btn"><i class="fas fa-location-arrow" (click)="sendMessage()"></i></span>
+                                    <span class="input-group-text send_btn" (click)="sendMessage()"><i
+                                            class="fas fa-location-arrow"></i></span>
                                 </div>
                             </div>
                         </form>
