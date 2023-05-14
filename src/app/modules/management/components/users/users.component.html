@@ -24,7 +24,7 @@
                 <td scope="row">{{user.createdAt | date: 'mediumDate'}}</td>
                 <td scope="row">
                     <div class="form-check form-switch" placement="left"
-                        [ngbTooltip]="mainService.user.userType !== 'management' ? 'No Permissions' : user._id === mainService.user.userId ? '' : ''">
+                        [ngbTooltip]="mainService.user.userType !== 'management' && user._id !== mainService.user.userId ? 'No Permissions' : ''">
                         <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="userStatus"
                             (click)="updateUser(user)"
                             [disabled]="user._id === mainService.user.userId || mainService.user.userType !== 'management'"
