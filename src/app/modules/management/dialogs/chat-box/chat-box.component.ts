@@ -159,6 +159,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   prepareChatUsers(response: any) {
+    const prevMessage = this.chatUsers[0]?.lastMessage?.message;
     this.chatUsers = [...response].filter((user: any) => user._id !== this.mainService.user.userId);
     this.chatUsers.sort((a: any, b: any) => {
       if (b.lastMessage?.createdAt && a.lastMessage?.createdAt) {
@@ -171,6 +172,10 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         return 0;
       }
     });
+    const newMessage = this.chatUsers[0]?.lastMessage?.message;
+    if(prevMessage !== newMessage && !this.firstLoad && this.currentChat.userId !== this.chatUsers[0]?._id) {
+      this.receivedAudio.play();
+    }
   }
 
   async sendMessage() {
