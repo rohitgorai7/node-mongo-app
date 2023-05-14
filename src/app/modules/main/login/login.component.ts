@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       this.loginForm.reset();
       this.mainService.setUser(response['user']);
       this.notificationService.success(response['message']);
-      this.navigate('management/users');
+      this.navigate('management/chat');
     } catch (error) {
       this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
