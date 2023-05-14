@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CommonService {
   currentChatData: any;
+  runContinuous: boolean = true;
 
   constructor() { }
 

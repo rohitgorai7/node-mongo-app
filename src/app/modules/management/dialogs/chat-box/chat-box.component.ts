@@ -23,12 +23,12 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: ElementRef;
   @ViewChild('sendMsg') sendMsg: ElementRef;
   isScroll: boolean = false;
-  runContinuous: boolean = true;
   sendAudio = new Audio();
   receivedAudio = new Audio();
   currentMessagesLength: number = 0;
   newMessagesLength: number = 0;
   firstLoad: boolean = true;
+  runContinuous: boolean = true;
 
   constructor(private commonService: CommonService, private formBuilder: FormBuilder, private mainApiService: MainApiService, public mainService: MainService, private managementApiService: ManagementApiService, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) { }
 
@@ -87,7 +87,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   continuousApis() {
     if (this.mainService.user && this.mainService.user.isLoggedIn) {
       this.subscription = interval(5000).subscribe(() => {
-        if (this.mainService.user && this.mainService.user.isLoggedIn && this.runContinuous) {
+        if (this.mainService.user && this.mainService.user.isLoggedIn && this.runContinuous && this.commonService.runContinuous) {
           this.getChatUsers();
           this.getMessages();
         }
@@ -138,6 +138,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } catch (error) {
       if (error.status === 0 || error.status >= 500) {
+        this.commonService.runContinuous = false;
         this.runContinuous = false;
       }
       this.notificationService.error(error.error?.message || error.message || MESSAGES.WENT_WRONG);
@@ -150,6 +151,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       this.prepareChatUsers([...response?.['users']]);
     } catch (error) {
       if (error.status === 0 || error.status >= 500) {
+        this.commonService.runContinuous = false;
         this.runContinuous = false;
       }
       this.notificationService.error(error.error?.message || error.message);
@@ -190,6 +192,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       this.sendMsg.nativeElement.blur();
     } catch (error) {
       if (error.status === 0 || error.status >= 500) {
+        this.commonService.runContinuous = false;
         this.runContinuous = false;
       }
       this.notificationService.error(error.error?.message || error.message);
