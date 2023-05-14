@@ -22,8 +22,8 @@
 
 <body>
     <div class="container-fluid h-100 full-chat">
-        <div class="row justify-content-center h-100">
-            <div class="col-md-4 col-xl-3 chat">
+        <div class="row h-100 w-100 mr-0 ml-0 px-0">
+            <div class="chat col-4 mr-0 ml-0 px-2">
                 <div class="card mb-sm-3 mb-md-0 contacts_card">
                     <div class="card-header">
                         <!-- <div class="input-group">
@@ -38,8 +38,7 @@
                             <li [ngClass]="user._id === currentChat.userId ? 'active': ''">
                                 <div class="d-flex bd-highlight cursor-pointer" (click)="getMessages(user)">
                                     <div class="img_cont">
-                                        <img src="../../../../../assets/images/_D.jpg"
-                                            class="rounded-circle user_img"
+                                        <img src="../../../../../assets/images/_D.jpg" class="rounded-circle user_img"
                                             [ngClass]="user.isLoggedIn ? 'b-green' : 'b-red'">
                                         <!-- <span class="online_icon" [ngClass]="user.isLoggedIn ? '' : 'offline'"></span> -->
                                     </div>
@@ -108,19 +107,19 @@
                     <div class="card-footer"></div>
                 </div>
             </div>
-            <div class="col-md-8 col-xl-6 chat">
+            <div class="chat msg-body col-8 mr-0 ml-0 px-2">
                 <div class="card">
                     <div class="card-header msg_head">
                         <div class="d-flex bd-highlight">
                             <div class="img_cont">
-                                <img src="../../../../../assets/images/_D.jpg"
-                                    class="rounded-circle user_img"
+                                <img src="../../../../../assets/images/_D.jpg" class="rounded-circle user_img"
                                     [ngClass]="currentChat.isLoggedIn ? 'b-green' : 'b-red'">
                                 <!-- <span class="online_icon" [ngClass]="currentChat.isLoggedIn ? '' : 'offline'"></span> -->
                             </div>
                             <div class="user_info">
                                 <span>{{currentChat.name | titlecase}}</span>
-                                <p *ngIf="currentChat.messages?.length">{{currentChat.messages?.length || 0}} Message(s)
+                                <p><i *ngIf="currentChat.messages?.length">{{currentChat.messages?.length || 0}}
+                                        Message(s)</i>
                                     &nbsp; &nbsp; <b
                                         [ngClass]="currentChat.isLoggedIn ? 't-green' : 't-red'">{{!currentChat.isLoggedIn
                                         ? 'Offline' : 'Online'}}</b></p>
@@ -149,15 +148,13 @@
                                     <!-- <span class="msg_time_send">{{chat.createdAt}}</span> -->
                                 </div>
                                 <div class="img_cont_msg">
-                                    <img src="http://simpleicon.com/wp-content/uploads/user1.png"
-                                        class="rounded-circle user_img_msg">
+                                    <img src="../../../../../assets/images/_D.jpg" class="rounded-circle user_img_msg">
                                 </div>
                             </div>
                             <div class="d-flex justify-content-start mb-4"
                                 *ngIf="chat.receiver === mainService.user.userId">
                                 <div class="img_cont_msg">
-                                    <img src="http://simpleicon.com/wp-content/uploads/user1.png"
-                                        class="rounded-circle user_img_msg">
+                                    <img src="../../../../../assets/images/_D.jpg" class="rounded-circle user_img_msg">
                                 </div>
                                 <div class="msg_cotainer">
                                     {{chat.message}}
@@ -168,7 +165,7 @@
                     </div>
                     <div class="card-footer">
                         <form [formGroup]="chatForm">
-                            <div class="input-group">
+                            <div class="input-group shadow-drop-center">
                                 <!-- <div class="input-group-append">
                                     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                                 </div> -->

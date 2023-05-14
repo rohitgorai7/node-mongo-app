@@ -23,7 +23,12 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('content') content: ElementRef;
   @ViewChild('sendMsg') sendMsg: ElementRef;
   isScroll: boolean = false;
-  runContinuous: boolean = false;
+  runContinuous: boolean = true;
+  sendAudio = new Audio();
+  receivedAudio = new Audio();
+  currentMessagesLength: number = 0;
+  newMessagesLength: number = 0;
+  firstLoad: boolean = true;
 
   constructor(private commonService: CommonService, private formBuilder: FormBuilder, private mainApiService: MainApiService, public mainService: MainService, private managementApiService: ManagementApiService, private ngxSpinnerService: NgxSpinnerService, private notificationService: NotificationService) { }
 
@@ -31,9 +36,12 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.ngxSpinnerService.show();
       this.getForm();
+      this.sendAudio.src = "../../../../../assets/sounds/send-msg.mp3";
+      this.sendAudio.load();
+      this.receivedAudio.src = "../../../../../assets/sounds/rcvd-msg.wav";
+      this.receivedAudio.load();
       await this.getChatUsers();
       const user: any = this.commonService.currentChatData;
-      console.log(user)
       if (user?._id) {
         this.currentChat.userId = user._id;
         this.currentChat.isLoggedIn = user.isLoggedIn;
@@ -47,6 +55,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch (error) {
       this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG);
     } finally {
+      this.firstLoad = false;
       this.ngxSpinnerService.hide();
     }
   }
@@ -77,7 +86,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
   continuousApis() {
     if (this.mainService.user && this.mainService.user.isLoggedIn) {
-      this.subscription = interval(10000).subscribe(() => {
+      this.subscription = interval(5000).subscribe(() => {
         if (this.mainService.user && this.mainService.user.isLoggedIn && this.runContinuous) {
           this.getChatUsers();
           this.getMessages();
@@ -106,10 +115,16 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       const params = {
         to
       }
-      console.log(params);
       const response: any = await this.managementApiService.getMessages(params);
       this.currentChat = response['data'];
       this.currentChat.userId = to;
+      this.newMessagesLength = this.currentChat.messages?.length;
+      if (!this.firstLoad && this.currentChat.userId && (this.newMessagesLength > this.currentMessagesLength)) {
+        if (this.currentChat.messages?.[this.currentChat.messages?.length - 1]?.sender !== this.mainService.user.userId) {
+          this.receivedAudio.play();
+        }
+      }
+      this.currentMessagesLength = this.newMessagesLength;
       if (user._id) {
         this.currentChat.isLoggedIn = user.isLoggedIn;
       } else if (this.currentChat.userId) {
@@ -120,7 +135,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
       if (user._id) {
         this.isScroll = true;
         this.sendMsg.nativeElement.focus()
-      };
+      }
     } catch (error) {
       if (error.status === 0 || error.status >= 500) {
         this.runContinuous = false;
@@ -143,7 +158,6 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
 
   prepareChatUsers(response: any) {
     this.chatUsers = [...response].filter((user: any) => user._id !== this.mainService.user.userId);
-    // this.chatUsers.sort((a: any, b: any) => b.lastMessage?.createdAt ? (new Date(b.lastMessage?.createdAt).getTime() - new Date(a.lastMessage?.createdAt).getTime()) : a.lastMessage?.createdAt ? 1 : 0 );
     this.chatUsers.sort((a: any, b: any) => {
       if (b.lastMessage?.createdAt && a.lastMessage?.createdAt) {
         return Date.parse(b.lastMessage?.createdAt) - Date.parse(a.lastMessage?.createdAt);
@@ -168,6 +182,7 @@ export class ChatBoxComponent implements OnInit, AfterViewInit, OnDestroy {
         to: this.currentChat.userId
       }
       await this.managementApiService.sendChat(payload);
+      this.sendAudio.play();
       this.chatForm.controls['message'].reset();
       this.getChatUsers();
       this.getMessages();
