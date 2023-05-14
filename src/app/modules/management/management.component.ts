@@ -3,6 +3,7 @@ import { NotificationService } from 'src/app/notification.service';
 import { WebApiService } from 'src/app/shared/services/web-api.service';
 import { MainService } from '../main/services/main.service';
 import { Subscription, interval } from 'rxjs';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
   selector: 'app-management',
@@ -11,23 +12,22 @@ import { Subscription, interval } from 'rxjs';
 })
 export class ManagementComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  runContinuous: boolean = true;
 
-  constructor(private webApiService: WebApiService, private notificationService: NotificationService, private mainService: MainService) { }
+  constructor(private commonService: CommonService,private webApiService: WebApiService, private notificationService: NotificationService, private mainService: MainService) { }
 
   ngOnInit(): void {
     this.continuousApis();
   }
 
   ngOnDestroy(): void {
-    this.runContinuous = false;
+    this.commonService.runContinuous = false;
     this.subscription.unsubscribe();
   }
 
   continuousApis() {
     if (this.mainService.user && this.mainService.user.isLoggedIn) {
       this.subscription = interval(30000).subscribe(() => {
-        if (this.mainService.user && this.mainService.user.isLoggedIn && this.runContinuous) {
+        if (this.mainService.user && this.mainService.user.isLoggedIn && this.commonService.runContinuous) {
           this.getUserData();
         }
       });

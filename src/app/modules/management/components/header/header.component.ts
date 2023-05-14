@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MainService } from 'src/app/modules/main/services/main.service';
 import { NotificationService } from 'src/app/notification.service';
 import { MESSAGES } from 'src/app/shared/constants/constants';
+import { CommonService } from 'src/app/shared/services/common.service';
 import { WebApiService } from 'src/app/shared/services/web-api.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { WebApiService } from 'src/app/shared/services/web-api.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private webApiService: WebApiService, private ngxSpinnerService: NgxSpinnerService,private router: Router, public mainService: MainService, private notificationService: NotificationService) { }
+  constructor(private commonService: CommonService,private webApiService: WebApiService, private ngxSpinnerService: NgxSpinnerService,private router: Router, public mainService: MainService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
   }
@@ -21,11 +22,13 @@ export class HeaderComponent implements OnInit {
   async logout() {
     try {
       this.ngxSpinnerService.show();
+      this.commonService.runContinuous = false;
       const response: any = await this.webApiService.logout();
       this.mainService.clearSession();
       this.notificationService.success(response.message);
       this.navigateTo('/');
     } catch (error) {
+      this.commonService.runContinuous = true;
       this.notificationService.error(error.error?.message || MESSAGES.WENT_WRONG );
     } finally {
       this.ngxSpinnerService.hide();
