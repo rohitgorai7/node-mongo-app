@@ -7,7 +7,7 @@ import { ChatBoxComponent } from './dialogs/chat-box/chat-box.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'users'
+    redirectTo: 'chat'
   },
   {
     path: '',
